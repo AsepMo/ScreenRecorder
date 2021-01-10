@@ -1,12 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 27
+	buildToolsVersion "27.0.3"
+   	compileOptions {
+   		sourceCompatibility JavaVersion.VERSION_1_7
+   		targetCompatibility JavaVersion.VERSION_1_7
+   	}
 
     defaultConfig {
         applicationId "com.androweb.screenrecording"
-        minSdkVersion 14
-        targetSdkVersion 29
+        minSdkVersion 16
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
     }
@@ -19,5 +24,7 @@ android {
 }
 
 dependencies {
+	//api project(':common')
+	compile "com.android.support:support-v4:27.0.2"
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
