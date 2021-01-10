@@ -26,6 +26,7 @@ import java.lang.ref.WeakReference;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.support.v4.app.FragmentActivity;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -46,7 +47,7 @@ import com.androweb.screenrecording.service.ScreenRecorderService;
 import com.androweb.utils.BuildCheck;
 import com.androweb.utils.PermissionCheck;
 
-public final class MainActivity extends Activity
+public final class MainActivity extends FragmentActivity
 	implements MessageDialogFragment.MessageDialogListener {
 
 	private static final boolean DEBUG = false;
@@ -63,6 +64,10 @@ public final class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		if (DEBUG) Log.v(TAG, "onCreate:");
 		setContentView(R.layout.activity_main);
+		getSupportFragmentManager()
+		.beginTransaction()
+		.replace(R.id.content_frame, new ScreenCaptureFragment())
+		.commit();
 		mRecordButton = (ToggleButton)findViewById(R.id.record_button);
 		mPauseButton = (ToggleButton)findViewById(R.id.pause_button);
 		updateRecording(false, false);
