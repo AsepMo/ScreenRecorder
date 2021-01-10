@@ -25,6 +25,7 @@ package com.androweb.screenrecording;
 import java.lang.ref.WeakReference;
 
 import android.Manifest;
+import android.support.annotation.NonNull;
 import android.annotation.SuppressLint;
 import android.support.v4.app.FragmentActivity;
 import android.app.Activity;
@@ -35,8 +36,8 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.util.Log;
+import android.view.Window;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
@@ -61,6 +62,7 @@ public final class MainActivity extends FragmentActivity
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		if (DEBUG) Log.v(TAG, "onCreate:");
 		setContentView(R.layout.activity_main);
@@ -74,8 +76,13 @@ public final class MainActivity extends FragmentActivity
 		if (mReceiver == null) {
 			mReceiver = new MyBroadcastReceiver(this);
 		}
+		getScreenPlay().onScreenPlay();
 	}
 
+	public ScreenCaptureFragment getScreenPlay()
+	{
+		return new ScreenCaptureFragment();
+	}
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -84,6 +91,7 @@ public final class MainActivity extends FragmentActivity
 		intentFilter.addAction(ScreenRecorderService.ACTION_QUERY_STATUS_RESULT);
 		registerReceiver(mReceiver, intentFilter);
 		queryRecordingStatus();
+		
 	}
 
 	@Override
